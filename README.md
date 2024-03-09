@@ -8,4 +8,4 @@
 ![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9c818597-b14b-4f8f-85e1-44fcbff25c3b)
 ![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9ee20631-3d9c-4ec1-a6db-18f5240fb633)
 
-<p>Then I had the coordonnates system with translation and rotation, so now I can move it every where</p>
+<p>Then I add the coordonnates system with translation and rotation, so now I can move it every where</p>
