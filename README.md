@@ -1,5 +1,7 @@
 <h1>OpenGL project</h1>
-<p><b>```diff- If you are reading this, consider that I'm an 18 years old autodidact programmer, and I program alongside my classes. So it's may not perfect and I still have a lot of things to learn.```</b></p>
+```diff
+- If you are reading this, consider that I'm an 18 years old autodidact programmer, and I program alongside my classes. So it's may not perfect and I still have a lot of things to learn.
+```
 <p>I'm currently really interested by the C++ and more particularly in the 3D, so I began to learn C++ few months ago, and now I want to create some cool thing with it.</p>
 <br>
 <h2>09/03/2023 - Basic Shape</h2>
@@ -9,11 +11,3 @@
 ![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9ee20631-3d9c-4ec1-a6db-18f5240fb633)
 
 <p>Then I add the coordinnates system with translation and rotation, so now I can move it everywhere</p>
-
-```diff
-- text in red
-+ text in green
-! text in orange
-# text in gray
-@@ text in purple (and bold)@@
-```
