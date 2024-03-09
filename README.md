@@ -6,8 +6,8 @@
 <h2>09/03/2023 - Basic Shape</h2>
 <p>After following the https://learnopengl.com/ tutorial I started to get interested about basic shape generation. So after a few hours I finally got an icosphere, a plane and a capsule.</p><br>
 
-![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9c818597-b14b-4f8f-85e1-44fcbff25c3b)
 ![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9ee20631-3d9c-4ec1-a6db-18f5240fb633)
+![image](https://github.com/Le-Mouton/OpenGL-Project/assets/65040124/57b5d508-1780-4986-8ce1-62903dff895c)
 
 <p>Then I add the coordinnates system with translation and rotation, so now I can move it everywhere</p>
 
