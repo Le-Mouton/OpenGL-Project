@@ -9,3 +9,11 @@
 ![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9ee20631-3d9c-4ec1-a6db-18f5240fb633)
 
 <p>Then I add the coordinnates system with translation and rotation, so now I can move it everywhere</p>
+
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
