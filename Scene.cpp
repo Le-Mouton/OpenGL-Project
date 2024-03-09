@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "MeshLoad.h"
+#include "Light.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -69,8 +70,6 @@ int createScene()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Erreur de GLAD" << std::endl;
@@ -84,20 +83,19 @@ int createScene()
     Mesh capsule;
 
     capsule = MakeCapsule(25, 50.0f, 2.0f, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(45.0f, 0.0f, 0.0f));
-    plane = MakePlane(4, 4, glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(45.0f, 0.0f, 0.0f),50,50);
-    sphere = MakeIcosphere(4, 5.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    plane = MakePlane(16, 16, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-45.0f, 0.0f, 0.0f),50,50);
+    sphere = MakeIcosphere(4, 10.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
     MeshLoad loadPlane(plane);
     MeshLoad loadSphere(sphere);
     MeshLoad loadCapsule(capsule);
 
-    // Unbind VBO (optional, for cleanliness)
+    Light light(shader, 0.5, 0.75, glm::vec3(0.75f), glm::vec3(1.0f), glm::vec3(0.0f,25.0f,0.0f), Shader(nullptr, nullptr));
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    // Unbind VAO (optional, but often recommended to avoid accidental modifications)
     glBindVertexArray(0);
 
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(window))
@@ -116,114 +114,13 @@ int createScene()
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetScrollCallback(window, scroll_callback);
 
-        glm::mat4 view;
-
-        view = camera.GetViewMatrix();
-
-        glm::mat4 projection;
-        projection = glm::perspective(glm::radians(90.0f), (float)(resolution), 0.1f, 100.0f);
         shader.useShader();
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-        shader.setVec3("viewPos", camera.Position);
-        shader.setVec3("light.position", camera.Position);
+        light.AddLight();
+        loadSphere.DrawObject(shader, camera, glm::vec3(1.0f,0.2f,0.8f), glm::vec3(0.7f,0.0f,0.0f));
 
-        // light properties
-        glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-        shader.setVec3("light.ambient", ambientColor);
-        shader.setVec3("light.diffuse", diffuseColor);
-        shader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        shader.setFloat("light.constant", 0.5f);
-        shader.setFloat("light.linear", 0.009f);
-        shader.setFloat("light.quadratic", 0.0032f);
-        shader.setVec3("light.direction", camera.Front);
-        //shader.setFloat("light.cutOff", glm::cos(glm::radians(30.0f)));
+        loadPlane.DrawObject(shader, camera, glm::vec3(0.1f,1.0f,0.6f),glm::vec3(0.0f,0.7f,0.0f));
 
-        // material properties
-        shader.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-        shader.setVec3("material.specular", glm::vec3(0.2f, 0.15f, 0.31f)); // specular lighting doesn't have full effect on this object's material
-        shader.setFloat("material.shininess", 16.0f);
-        // Pour la sphère
-
-        float x = sin(glfwGetTime())* 2;
-        sphere.coord.x = x;
-
-        glm::mat4 modelSphere = glm::mat4(1.0f);
-        modelSphere = glm::translate(modelSphere, sphere.coord);
-        modelSphere = glm::rotate(modelSphere, glm::radians(sphere.rotation.x), glm::vec3(1, 0, 0)); // Rotation autour de l'axe X
-        modelSphere = glm::rotate(modelSphere, glm::radians(sphere.rotation.y), glm::vec3(0, 1, 0)); // Rotation autour de l'axe Y
-        modelSphere = glm::rotate(modelSphere, glm::radians(sphere.rotation.z), glm::vec3(0, 0, 1)); // Rotation autour de l'axe Z
-
-        shader.setMat4("model", modelSphere);
-        loadSphere.Draw(shader);
-
-        shader.useShader();
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-        shader.setVec3("viewPos", camera.Position);
-        shader.setVec3("light.position", camera.Position);
-
-        // light properties
-        shader.setVec3("light.ambient", ambientColor);
-        shader.setVec3("light.diffuse", diffuseColor);
-        shader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        shader.setFloat("light.constant", 0.5f);
-        shader.setFloat("light.linear", 0.009f);
-        shader.setFloat("light.quadratic", 0.0032f);
-        shader.setVec3("light.direction", camera.Front);
-        //shader.setFloat("light.cutOff", glm::cos(glm::radians(30.0f)));
-
-        // material properties
-        shader.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-        shader.setVec3("material.specular", glm::vec3(0.2f, 0.15f, 0.31f)); // specular lighting doesn't have full effect on this object's material
-        shader.setFloat("material.shininess", 16.0f);
-
-        glm::mat4 modelPlane = glm::mat4(1.0f);
-        modelPlane = glm::translate(modelPlane, plane.coord);
-        modelPlane = glm::rotate(modelPlane, glm::radians(plane.rotation.x), glm::vec3(1, 0, 0)); // Rotation autour de l'axe X
-        modelPlane = glm::rotate(modelPlane, glm::radians(plane.rotation.y), glm::vec3(0, 1, 0)); // Rotation autour de l'axe Y
-        modelPlane = glm::rotate(modelPlane, glm::radians(plane.rotation.z), glm::vec3(0, 0, 1)); // Rotation autour de l'axe Z
-
-        shader.setMat4("model", modelPlane);
-        loadPlane.Draw(shader);
-
-        shader.useShader();
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
-        shader.setVec3("viewPos", camera.Position);
-        shader.setVec3("light.position", camera.Position);
-
-        // light properties
-        shader.setVec3("light.ambient", ambientColor);
-        shader.setVec3("light.diffuse", diffuseColor);
-        shader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        shader.setFloat("light.constant", 0.5f);
-        shader.setFloat("light.linear", 0.009f);
-        shader.setFloat("light.quadratic", 0.0032f);
-        shader.setVec3("light.direction", camera.Front);
-        //shader.setFloat("light.cutOff", glm::cos(glm::radians(30.0f)));
-
-        // material properties
-        shader.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-        shader.setVec3("material.specular", glm::vec3(0.2f, 0.15f, 0.31f)); // specular lighting doesn't have full effect on this object's material
-        shader.setFloat("material.shininess", 16.0f);
-
-        glm::mat4 modelCapsule = glm::mat4(1.0f);
-        modelCapsule = glm::translate(modelCapsule, capsule.coord);
-        modelCapsule = glm::rotate(modelCapsule, glm::radians(capsule.rotation.x), glm::vec3(1, 0, 0)); // Rotation autour de l'axe X
-        modelCapsule = glm::rotate(modelCapsule, glm::radians(capsule.rotation.y), glm::vec3(0, 1, 0)); // Rotation autour de l'axe Y
-        modelCapsule = glm::rotate(modelCapsule, glm::radians(capsule.rotation.z), glm::vec3(0, 0, 1)); // Rotation autour de l'axe Z
-
-        shader.setMat4("model", modelCapsule);
-        loadCapsule.Draw(shader);
-
-
-
-
-
-
+        loadCapsule.DrawObject(shader, camera, glm::vec3(0.5f,0.2f,1.0f),glm::vec3(0.0f,0.0f,0.7f));
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -287,7 +184,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     }
 
     float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    float yoffset = lastY - ypos;
 
     lastX = xpos;
     lastY = ypos;
@@ -295,8 +192,6 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));

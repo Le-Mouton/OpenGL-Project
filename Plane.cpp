@@ -19,14 +19,11 @@ Mesh MakePlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, f
     const int totalIndexCount = 6 * xCount * yCount;
     const int totalVertexCount = (xCount + 1) * (yCount + 1);
 
-    // Adjust to use width and height for the offset calculation
-    const vec3 offset = vec3(-width / 2.0f, -height / 2.0f, 0); // Center the plane at (0,0,0)
+    const vec3 offset = vec3(-width / 2.0f, -height / 2.0f, 0);
 
-    // Calculate step based on width and height
     const float xStep = width / xCount;
     const float yStep = height / yCount;
 
-    // UV steps remain the same
     const float uStep = 1.0f / xCount;
     const float vStep = 1.0f / yCount;
 

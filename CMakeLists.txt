@@ -14,10 +14,8 @@ add_executable(LearningProject main.cpp
         Capsule.cpp
         Mesh.h
         MeshLoad.h
+        Light.h
 )
-
-#target_include_directories(LearningProject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include/glm)
-#target_include_directories(LearningProject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include/GLFW)
 
 target_include_directories(LearningProject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)
 

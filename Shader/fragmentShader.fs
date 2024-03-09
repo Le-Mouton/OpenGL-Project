@@ -21,10 +21,10 @@ struct Light{
 
 	float constant;
 
-    float linear;
-    float quadratic;
+    //float linear;
+    //float quadratic;
 
-	vec3 direction;
+	//vec3 direction;
 	//float cutOff;
 };
 

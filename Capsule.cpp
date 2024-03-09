@@ -16,22 +16,12 @@ Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 ro
         return {};
     }
 
-    // Almost same generation as UV sphere but we force the
-    // lat count to be odd so it can be split evenly
-
     int latCount = resolution;
     int lonCount = resolution;
 
     if (latCount % 2 == 0) {
         latCount++;
     }
-
-    // Each longitudinal count makes two triangles (6 indices) for every
-    // lateral count except for the top and bottom poles, which only make
-    // one triangle per longitudinal count.
-
-    // UV maps require two vertices with the same position, but different UVs
-    // so we need counts + 1.
 
     const int totalIndexCount = 6 * (latCount - 1) * lonCount;
     const int totalVertexCount = (latCount + 1) * (lonCount + 1);
@@ -74,10 +64,6 @@ Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 ro
                 capsule.norm[currentVertex] = normalize(vec3(x, y, z));
             }
 
-
-            // UVs are almost the same as the UV sphere, but V needs
-            // to be scaled to fit the height
-
             capsule.uvs[currentVertex] = vec2(
                     (float)lon / lonCount,
                     capsule.pos[currentVertex].z / (radius * 2 + height) + 0.5f
@@ -87,22 +73,6 @@ Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 ro
         }
     }
 
-    // Top cap
-    //
-    // One triangle connects the first lateral layer to the second per longitudinal count.
-    // Even though the top points all have the same position, their UVs are different,
-    // so each triangle uses a different point.
-    //
-    //          -------- lonCount -------->
-    //                      lon
-    //    |                  *
-    //    |                / | \
-	//    1             /    |    \
-	//    |          /       |       \
-	//    |       /                     \
-	//   \ /     *------------*------------*
-    //          v          v + 1      (v + 1) + 1
-
     int v = lonCount + 1;
     for (int lon = 0; lon < lonCount; lon++) {
         capsule.index[currentIndex++] = lon;
@@ -111,20 +81,6 @@ Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 ro
 
         v += 1;
     }
-
-    // Middle
-    //
-    // Each lateral layer has 2 triangles for every longitudinal count.
-    //
-    //          -------- lonCount -------->
-    //          v          v + 1      (v + 1) + 1
-    //    |     *------------*------------*
-    //    |     |          / |          / |
-    // latCount |       /    |       /    |
-    //    |     |    /       |    /       |
-    //    |     | /          | /          |
-    //   \ /    *------------*------------*
-    //      v + lc + 1   v + lc + 2   (v + 1) + lc + 2
 
     v = lonCount + 1;
     for (int lat = 1; lat < latCount - 1; lat++) {
@@ -142,20 +98,6 @@ Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 ro
 
         v += 1;
     }
-
-    // Bottom cap
-
-    // Same as top cap, but reversed.
-    //
-    //          -------- lonCount -------->
-    //          v          v + 1      (v + 1) + 1
-    //    |     *------------*------------*
-    //    |       \          |          /
-    //    1          \       |       /
-    //    |             \    |    /
-    //    |                \ | /
-    //   \ /                 *
-    //                   v + lc + 1
 
     for (int lon = 0; lon < lonCount; lon++) {
         capsule.index[currentIndex++] = v;
