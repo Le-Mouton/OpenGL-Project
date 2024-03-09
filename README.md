@@ -1,9 +1,7 @@
 <h1>OpenGL project</h1>
-
-```diff
-- If you are reading this, consider that I'm an 18 years old autodidact programmer, and I program alongside my classes. So it's may not perfect and I still have a lot of things to learn.
-```
-
+<br>
+<b>If you are reading this, consider that I'm an 18 years old autodidact programmer, and I program alongside my classes. So it's may not perfect and I still have a lot of things to learn.</b>
+<br>
 <p>I'm currently really interested by the C++ and more particularly in the 3D, so I began to learn C++ few months ago, and now I want to create some cool thing with it.</p>
 <br>
 <h2>09/03/2023 - Basic Shape</h2>
