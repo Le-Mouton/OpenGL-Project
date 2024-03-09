@@ -82,9 +82,9 @@ int createScene()
     Mesh plane;
     Mesh capsule;
 
-    capsule = MakeCapsule(25, 50.0f, 2.0f, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(45.0f, 0.0f, 0.0f));
+    capsule = MakeCapsule(25, 50.0f, 2.0f, glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
     plane = MakePlane(16, 16, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-45.0f, 0.0f, 0.0f),50,50);
-    sphere = MakeIcosphere(4, 10.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    sphere = MakeIcosphere(4, 10.0f, glm::vec3(0.0f, 0.0f, 10.0f));
 
     MeshLoad loadPlane(plane);
     MeshLoad loadSphere(sphere);
