@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <float.h>
 
-Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 rotation) {
+Mesh createCapsule(int resolution, float height, float radius, vec3 coord, vec3 rotation) {
 
     float pitch = rotation.x;
     float yaw = rotation.y;

@@ -19,7 +19,7 @@ struct Light{
 
 	vec3 position;
 
-	float constant;
+	//float constant;
 
     //float linear;
     //float quadratic;

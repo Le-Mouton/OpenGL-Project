@@ -91,6 +91,13 @@ build CMakeFiles/LearningProject.dir/Capsule.cpp.obj: CXX_COMPILER__LearningProj
   OBJECT_DIR = CMakeFiles\LearningProject.dir
   OBJECT_FILE_DIR = CMakeFiles\LearningProject.dir
 
+build CMakeFiles/LearningProject.dir/Physic.cpp.obj: CXX_COMPILER__LearningProject_unscanned_Debug C$:/Users/mathy/CLionProjects/LearningProject/Physic.cpp || cmake_object_order_depends_target_LearningProject
+  DEP_FILE = CMakeFiles\LearningProject.dir\Physic.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/mathy/CLionProjects/LearningProject/Include -isystem C:/Users/mathy/CLionProjects/LearningProject/Include/GLFW
+  OBJECT_DIR = CMakeFiles\LearningProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\LearningProject.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target LearningProject
@@ -99,7 +106,7 @@ build CMakeFiles/LearningProject.dir/Capsule.cpp.obj: CXX_COMPILER__LearningProj
 #############################################
 # Link the executable LearningProject.exe
 
-build LearningProject.exe: CXX_EXECUTABLE_LINKER__LearningProject_Debug CMakeFiles/LearningProject.dir/main.cpp.obj CMakeFiles/LearningProject.dir/Icosphere.cpp.obj CMakeFiles/LearningProject.dir/Scene.cpp.obj CMakeFiles/LearningProject.dir/glad.c.obj CMakeFiles/LearningProject.dir/Plane.cpp.obj CMakeFiles/LearningProject.dir/Capsule.cpp.obj | C$:/Users/mathy/CLionProjects/LearningProject/Include/GLFW/lib/libglfw3.a
+build LearningProject.exe: CXX_EXECUTABLE_LINKER__LearningProject_Debug CMakeFiles/LearningProject.dir/main.cpp.obj CMakeFiles/LearningProject.dir/Icosphere.cpp.obj CMakeFiles/LearningProject.dir/Scene.cpp.obj CMakeFiles/LearningProject.dir/glad.c.obj CMakeFiles/LearningProject.dir/Plane.cpp.obj CMakeFiles/LearningProject.dir/Capsule.cpp.obj CMakeFiles/LearningProject.dir/Physic.cpp.obj | C$:/Users/mathy/CLionProjects/LearningProject/Include/GLFW/lib/libglfw3.a
   FLAGS = -g
   LINK_LIBRARIES = C:/Users/mathy/CLionProjects/LearningProject/Include/GLFW/lib/libglfw3.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\LearningProject.dir

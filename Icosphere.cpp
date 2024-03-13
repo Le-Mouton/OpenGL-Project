@@ -65,7 +65,7 @@ static const int IcoIndex[] = {
         15, 17, 19
 };
 
-Mesh MakeIcosphere(int resolution, float radius, vec3 coord) {
+Mesh createIcosphere(int resolution, float radius, vec3 coord) {
 
     const int rn = (int)pow(4, resolution);
     const int totalIndexCount = IcoIndexCount * rn;
@@ -76,6 +76,7 @@ Mesh MakeIcosphere(int resolution, float radius, vec3 coord) {
     sphere.index.resize(totalIndexCount);
     sphere.pos.resize(totalVertexCount);
     sphere.uvs.resize(totalVertexCount);
+    sphere.coord = coord;
 
     for (int i = 0; i < IcoVertexCount; i++) {
         sphere.pos[i] = IcoVerts[i];
@@ -146,7 +147,7 @@ Mesh MakeIcosphere(int resolution, float radius, vec3 coord) {
         vec3& pos = sphere.pos[i];
         pos = normalize(pos); // Normaliser pour obtenir une direction uniforme
         sphere.norm.push_back(pos); // Utiliser la direction normalisée comme normale
-        pos = pos * radius + coord; // Ajuster selon le rayon et ajouter les coordonnées
+        pos = pos * radius; // Ajuster selon le rayon et ajouter les coordonnées
     }
 
     sphere.rotation = vec3(0.0f);

@@ -21,8 +21,8 @@ struct Mesh {
     vec3 coord;
 };
 
-Mesh MakePlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, float height);
-Mesh MakeCapsule(int resolution, float height, float radius, vec3 coord, vec3 rotation);
-Mesh MakeIcosphere(int resolution, float radius, vec3 coord);
+Mesh createPlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, float height);
+Mesh createCapsule(int resolution, float height, float radius, vec3 coord, vec3 rotation);
+Mesh createIcosphere(int resolution, float radius, vec3 coord);
 
 #endif //LEARNINGPROJECT_MESH_H

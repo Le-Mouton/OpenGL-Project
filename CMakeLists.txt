@@ -15,6 +15,8 @@ add_executable(LearningProject main.cpp
         Mesh.h
         MeshLoad.h
         Light.h
+        Physic.cpp
+        Physic.h
 )
 
 target_include_directories(LearningProject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)

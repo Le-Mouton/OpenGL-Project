@@ -7,24 +7,19 @@ using namespace glm;
 
 class Light{
 public:
-    Shader shader;
     float alpha;
     float beta;
     vec3 lightColor;
     vec3 lightSpecular;
     vec3 coord;
-    Light(Shader shader, float alpha, float beta, vec3 lightColor, vec3 lightSpecular, vec3 coord, Shader shader1)
-            : shader(shader1) {
-        this->shader=shader;
+    Light(float alpha, float beta, vec3 lightColor, vec3 lightSpecular, vec3 coord) {
         this->alpha=alpha;
         this->beta=beta;
         this->lightColor=lightColor;
         this->lightSpecular=lightSpecular;
         this->coord=coord;
-
-        AddLight();
     }
-    void AddLight(){
+    void AddLight(Shader &shader){
         glm::vec3 diffuseColor = lightColor   * glm::vec3(alpha);
         glm::vec3 ambientColor = diffuseColor * glm::vec3(beta);
 

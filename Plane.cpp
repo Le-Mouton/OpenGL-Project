@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh MakePlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, float height) {
+Mesh createPlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, float height) {
 
     float pitch = rotation.x;
     float yaw = rotation.y;
@@ -19,7 +19,7 @@ Mesh MakePlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, f
     const int totalIndexCount = 6 * xCount * yCount;
     const int totalVertexCount = (xCount + 1) * (yCount + 1);
 
-    const vec3 offset = vec3(-width / 2.0f, -height / 2.0f, 0);
+    const vec3 offset = vec3(-width / 2.0f, 0, -height / 2.0f);
 
     const float xStep = width / xCount;
     const float yStep = height / yCount;
@@ -32,14 +32,18 @@ Mesh MakePlane(int xCount, int yCount, vec3 coord, vec3 rotation, float width, f
     plane.index.resize(totalIndexCount);
     plane.pos.resize(totalVertexCount);
     plane.uvs.resize(totalVertexCount);
-    plane.norm.resize(totalVertexCount, vec3(0, 0, 1));
+
+    vec3 originalNorm = vec3(0, 1, 0);
+    vec4 rotatedNorm = rotationMatrix * vec4(originalNorm, 1.0f);
+
+    plane.norm.resize(totalVertexCount, vec3(rotatedNorm));
 
     for (int x = 0; x <= xCount; x++)
         for (int y = 0; y <= yCount; y++)
         {
             int i = y + x * (yCount + 1);
 
-            vec3 originalPos = vec3(coord.x + x * xStep, coord.y + y * yStep, coord.z) + offset;
+            vec3 originalPos = vec3(x * xStep, 0, y * yStep) + offset + coord;
             vec4 rotatedPos = rotationMatrix * vec4(originalPos, 1.0f); // Applique la rotation
 
             plane.pos[i] = vec3(rotatedPos);

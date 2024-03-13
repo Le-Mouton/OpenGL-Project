@@ -11,22 +11,37 @@ public:
 
     MeshLoad(Mesh &mesh){
         this->mesh = mesh;
+
         setUpMesh();
+    }
+    void UpdateMesh(vec3 coord){
+        mesh.coord = coord;
     }
     void DrawObject(Shader &shader, Camera &camera, vec3 material_diffuse = vec3(1.0f), vec3 material_specular = vec3(1.0f), float shininess = 16.0f)
     {
         shader.setMat4("view", camera.getViewMatrix());
         shader.setMat4("projection", camera.getProjection(1.77f));
-        shader.setVec3("viewPos", camera.Position);
-        shader.setVec3("material.diffuse", material_diffuse);
-        shader.setVec3("material.specular", material_specular);
-        shader.setFloat("material.shininess", shininess);
+
         glm::mat4 modelSphere = glm::mat4(1.0f);
         modelSphere = glm::translate(modelSphere, mesh.coord);
         modelSphere = glm::rotate(modelSphere, glm::radians(mesh.rotation.x), glm::vec3(1, 0, 0)); // Rotation autour de l'axe X
         modelSphere = glm::rotate(modelSphere, glm::radians(mesh.rotation.y), glm::vec3(0, 1, 0)); // Rotation autour de l'axe Y
         modelSphere = glm::rotate(modelSphere, glm::radians(mesh.rotation.z), glm::vec3(0, 0, 1)); // Rotation autour de l'axe Z
         shader.setMat4("model", modelSphere);
+/*
+        glm::vec3 lightColor = glm::vec3(1.0f);
+        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.8f);
+
+        shader.setVec3("light.position", glm::vec3(5.0f));
+        shader.setVec3("light.ambient", ambientColor);
+        shader.setVec3("light.diffuse", diffuseColor);
+        shader.setVec3("light.specular", lightColor);
+*/
+        shader.setVec3("viewPos", camera.Position);
+        shader.setVec3("material.diffuse", material_diffuse);
+        shader.setVec3("material.specular", material_specular);
+        shader.setFloat("material.shininess", shininess);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(mesh.index.size()), GL_UNSIGNED_INT, 0);

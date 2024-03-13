@@ -60,7 +60,7 @@ public:
             fragmentCode = fragmentShaderStream.str();
         }
         catch (std::ifstream::failure e) {
-            std::cout << "Erreur lors de l'ouverture des shaders" << std::endl;
+            std::cout << "Erreur lors de l'ouverture des shaders"<< e.what() << std::endl;
         }
         const char* vertexShaderCode = vertexCode.c_str();
         const char* fragmentShaderCode = fragmentCode.c_str();
@@ -75,7 +75,7 @@ public:
         //then we open our shader and compile it
         glShaderSource(vertexShader, 1, &vertexShaderCode, NULL);
         glCompileShader(vertexShader);
-        // optional but we can check if there are some errors when the shader is compile
+        // optional but we can check if there are some errors when the shader is compiled
         int  success;
         char infoLog[512];
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);

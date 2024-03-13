@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "MeshLoad.h"
 #include "Light.h"
+#include "Physic.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -25,31 +26,7 @@ float lastY = SCR_HEIGHT / 2;
 
 bool pressed = true;
 
-glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraDessus = glm::vec3(0.0f, 1.0f, 0.0f);
-glm::vec3 cameraDevant = glm::vec3(0.0f, 0.0f, -1.0f);
-
-glm::vec3 cameraCible = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 cameraZ = glm::normalize(cameraPosition - cameraCible); // note that it's the inverse of the direction in fact
-
-//to get the positive x-axis:
-glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f); // ===> vecteur unitaires
-//On prend le vecteur de la camera donc z, on fait le produit vectoriel avec y et on obtien x !! ON FAIT up ^ cameraDirection et pas l'inverse sinon négatif
-glm::vec3 cameraX = glm::normalize(glm::cross(up, cameraZ));
-//Maintenant que l'on a la caméra selon X, selon Z il manque plus qu'a fair eun produit vectoriel pour obtenir Y
-glm::vec3 cameraY = glm::cross(cameraZ, cameraX);
-
-glm::vec3 pointLightPositions[] = {
-        glm::vec3(0.0f,  0.0f,  1.0f),
-        glm::vec3(0.0f, -1.0f, -1.0f),
-        glm::vec3(-1.0f,  1.0f, -1.0f),
-        glm::vec3(0.0f,  0.0f, -1.0f)
-};
-
-glm::vec3 coord = glm::vec3(0.0f);
-
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-
+Camera camera(glm::vec3(10.0f, 10.0f, 0.0f));
 
 int createScene()
 {
@@ -77,20 +54,39 @@ int createScene()
     }
     Shader shader("Shader/vertexShader.vs", "Shader/fragmentShader.fs");
 
-
     Mesh sphere;
+    Mesh sphere1;
     Mesh plane;
-    Mesh capsule;
+    //Mesh plane1;
+    //Mesh capsule;
 
-    capsule = MakeCapsule(25, 50.0f, 2.0f, glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-    plane = MakePlane(16, 16, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-45.0f, 0.0f, 0.0f),50,50);
-    sphere = MakeIcosphere(4, 10.0f, glm::vec3(0.0f, 0.0f, 10.0f));
+    //capsule = createCapsule(25, 50.0f, 2.0f, glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+    plane = createPlane(16, 16, glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 0.0f),200, 200);
+    //plane1 = createPlane(16, 16, glm::vec3(0.0f,20.0f,0.0f), glm::vec3(0.0f, 0.0f, 0.0f),10, 10);
+    sphere = createIcosphere(4, 10.0f, vec3(1.0f, 50.0f, 0.0f));
+    sphere1 = createIcosphere(4, 5.0f, vec3(0.0f, 25.0f, 0.0f));
 
     MeshLoad loadPlane(plane);
+    //MeshLoad loadPlane1(plane1);
     MeshLoad loadSphere(sphere);
-    MeshLoad loadCapsule(capsule);
+    MeshLoad loadSphere1(sphere1);
+    //MeshLoad loadCapsule(capsule);
 
-    Light light(shader, 0.5, 0.75, glm::vec3(0.75f), glm::vec3(1.0f), glm::vec3(0.0f,25.0f,0.0f), Shader(nullptr, nullptr));
+    Light light(0.5, 0.75, glm::vec3(0.75f), glm::vec3(1.0f), glm::vec3(25.0f,25.0f,25.0f));
+
+    // physique
+
+    std::vector<Object*> listObject;
+
+    Sphere sphere_p(sphere.coord, 10.0f, true,  10.0f);
+    Sphere sphere1_p(sphere1.coord, 10.0f, true,  5.0f);
+    Plane plane_p(vec3(0.0f), 10000000.0f, false, 200.0f, 200.0f, plane.norm[2]);
+    //Plane plane1_p(plane1.coord, 100.0f, true, 10.0f, 10.0f, plane.norm[2]);
+
+    listObject.push_back(&sphere_p);
+    listObject.push_back(&sphere1_p);
+    listObject.push_back(&plane_p);
+    //listObject.push_back(&plane1_p);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -105,6 +101,8 @@ int createScene()
         deltatime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        updateAllObjects(listObject, deltatime);
+
         processInput(window);
 
         glClearColor(0.2f, 0.3f, 0.5f, 1.0f);
@@ -115,12 +113,19 @@ int createScene()
         glfwSetScrollCallback(window, scroll_callback);
 
         shader.useShader();
-        light.AddLight();
+        light.AddLight(shader);
+
+        loadSphere.mesh.coord = sphere_p.coord;
+        loadSphere1.mesh.coord = sphere1_p.coord;
+        //loadPlane1.mesh.coord = plane1_p.coord;
+
         loadSphere.DrawObject(shader, camera, glm::vec3(1.0f,0.2f,0.8f), glm::vec3(0.7f,0.0f,0.0f));
+        loadSphere1.DrawObject(shader, camera, glm::vec3(0.0f,0.2f,0.8f), glm::vec3(0.5f,0.0f,1.0f));
+        //loadPlane1.DrawObject(shader, camera, glm::vec3(0.0f,0.8f,0.8f), glm::vec3(0.7f,0.4f,0.4f));
 
-        loadPlane.DrawObject(shader, camera, glm::vec3(0.1f,1.0f,0.6f),glm::vec3(0.0f,0.7f,0.0f));
+        loadPlane.DrawObject(shader, camera, glm::vec3(0.8f,1.0f,0.6f),glm::vec3(0.0f,0.7f,0.0f));
 
-        loadCapsule.DrawObject(shader, camera, glm::vec3(0.5f,0.2f,1.0f),glm::vec3(0.0f,0.0f,0.7f));
+        //loadCapsule.DrawObject(shader, camera, glm::vec3(0.5f,0.2f,1.0f),glm::vec3(0.0f,0.0f,0.7f));
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -128,7 +133,7 @@ int createScene()
 
     loadSphere.Delete();
     loadPlane.Delete();
-    loadCapsule.Delete();
+    //loadCapsule.Delete();
     shader.deleteShader();
 
 
