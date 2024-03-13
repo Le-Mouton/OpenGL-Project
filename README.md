@@ -9,5 +9,6 @@
 ![image](https://github.com/Le-Mouton/OpenGL-LearningProject/assets/65040124/9ee20631-3d9c-4ec1-a6db-18f5240fb633)
 ![image](https://github.com/Le-Mouton/OpenGL-Project/assets/65040124/57b5d508-1780-4986-8ce1-62903dff895c)
 
-<p>Then I add the coordinnates system with translation and rotation, so now I can move it everywhere</p>
-
+<p>Then I add the coordinnates system with translation and rotation, so now I can move it everywhere.</p>
+<h2>13/03/2023 - The beginning of physics</h2>
+<p>Today I've start to code the physics of my little engine. I want start by basic collision, and physics system and then I'll improve it. I've start to look at the Gilbert–Johnson–Keerthi distance algorithm and Range Kutta in view to improve it step by step.</p>
