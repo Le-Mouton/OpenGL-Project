@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers sources\Shape">
+      <UniqueIdentifier>{d0961445-2dbd-4e82-9658-6f3c33fa4083}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="include\glad.c">
+      <Filter>Fichiers de ressources</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Physic.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Capsule.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Cone.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Cylinder.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Icosphere.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Plane.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Rectangle.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Triangle.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Tube.cpp">
+      <Filter>Fichiers sources\Shape</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\fragmentAnimationFlameShader.fs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\fragmentFlameShader.fs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\fragmentShader.fs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\vertexAnimationFlameShader.vs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\vertexFlameShader.vs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\vertexShader.vs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="fragmentShader.f">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="vertexShader.v">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\fragment.f">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shader\vertex.v">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="2Dvertex.v">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="2Dfragment.f">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadModel.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoad.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Physic.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
